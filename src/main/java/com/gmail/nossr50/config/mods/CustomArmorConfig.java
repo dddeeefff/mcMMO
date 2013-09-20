@@ -83,7 +83,16 @@ public class CustomArmorConfig extends ConfigLoader {
             if (repairable) {
                 byte repairData = (byte) config.getInt(armorType + "." + armorName + ".Repair_Material_Data_Value", -1);
                 int repairQuantity = Repair.getRepairAndSalvageQuantities(new ItemStack(armorMaterial), repairMaterial, repairData);
+
+                if (repairQuantity == 0) {
+                    repairQuantity = config.getInt(armorType + "." + armorName + ".Repair_Material_Data_Quantity", 2);
+                }
+
                 short durability = armorMaterial.getMaxDurability();
+
+                if (durability == 0) {
+                    durability = (short) config.getInt(armorType + "." + armorName + ".Durability", 70);
+                }
 
                 repairables.add(RepairableFactory.getRepairable(armorMaterial, repairMaterial, repairData, repairQuantity, durability));
             }

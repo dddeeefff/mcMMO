@@ -6,10 +6,14 @@ Boots:
         Repairable: true
         Repair_Material: REPAIR_MATERIAL_NAME
         Repair_Material_Data_Value: 0
+        Repair_Material_Quantity: 9
+        Durability: 999
     Boot_2:
         Repairable: true
         Repair_Material: REPAIR_MATERIAL_NAME
         Repair_Material_Data_Value: 0
+        Repair_Material_Quantity: 9
+        Durability: 999
 #
 #  Settings for Chestplates
 ###
@@ -18,10 +22,14 @@ Chestplates:
         Repairable: true
         Repair_Material: REPAIR_MATERIAL_NAME
         Repair_Material_Data_Value: 0
+        Repair_Material_Quantity: 9
+        Durability: 999
     Chestplate_2:
         Repairable: true
         Repair_Material: REPAIR_MATERIAL_NAME
         Repair_Material_Data_Value: 0
+        Repair_Material_Quantity: 9
+        Durability: 999
 #
 #  Settings for Helmets
 ###
@@ -30,10 +38,14 @@ Helmets:
         Repairable: true
         Repair_Material: REPAIR_MATERIAL_NAME
         Repair_Material_Data_Value: 0
+        Repair_Material_Quantity: 9
+        Durability: 999
     Helmet_2:
         Repairable: true
         Repair_Material: REPAIR_MATERIAL_NAME
         Repair_Material_Data_Value: 0
+        Repair_Material_Quantity: 9
+        Durability: 999
 #
 #  Settings for Leggings
 ###
@@ -42,7 +54,11 @@ Leggings:
         Repairable: true
         Repair_Material: REPAIR_MATERIAL_NAME
         Repair_Material_Data_Value: 0
+        Repair_Material_Quantity: 9
+        Durability: 999
     Legging_2:
         Repairable: true
         Repair_Material: REPAIR_MATERIAL_NAME
         Repair_Material_Data_Value: 0
+        Repair_Material_Quantity: 9
+        Durability: 999
