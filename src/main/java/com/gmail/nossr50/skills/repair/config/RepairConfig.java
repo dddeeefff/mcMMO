@@ -7,13 +7,9 @@ import java.util.Set;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Recipe;
-import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.ShapelessRecipe;
-import org.bukkit.material.MaterialData;
 
-import com.gmail.nossr50.mcMMO;
 import com.gmail.nossr50.config.ConfigLoader;
+import com.gmail.nossr50.skills.repair.Repair;
 import com.gmail.nossr50.skills.repair.RepairItemType;
 import com.gmail.nossr50.skills.repair.RepairMaterialType;
 import com.gmail.nossr50.skills.repair.Repairable;
@@ -129,7 +125,7 @@ public class RepairConfig extends ConfigLoader {
                 }
             }
 
-            int repairMetadata = config.getInt("Repairables." + key + ".RepairMaterialMetadata", -1);
+            byte repairMetadata = (byte) config.getInt("Repairables." + key + ".RepairMaterialMetadata", -1);
             int minimumLevel = config.getInt("Repairables." + key + ".MinimumLevel");
             double xpMultiplier = config.getDouble("Repairables." + key + ".XpMultiplier", 1);
 
@@ -144,24 +140,7 @@ public class RepairConfig extends ConfigLoader {
                 minimumQuantity = config.getInt("Repairables." + key + ".MinimumQuantity");
             }
             else if (itemMaterial != null) {
-                ItemStack item = new ItemStack(itemMaterial);
-                MaterialData repairData = new MaterialData(repairMaterial, (byte) repairMetadata);
-                Recipe recipe = mcMMO.p.getServer().getRecipesFor(item).get(0);
-
-                if (recipe instanceof ShapelessRecipe) {
-                    for (ItemStack ingredient : ((ShapelessRecipe) recipe).getIngredientList()) {
-                        if (ingredient != null && ingredient.getType() == repairMaterial && (repairMetadata == -1 || ingredient.getData() == repairData)) {
-                            minimumQuantity += ingredient.getAmount();
-                        }
-                    }
-                }
-                else if (recipe instanceof ShapedRecipe) {
-                    for (ItemStack ingredient : ((ShapedRecipe) recipe).getIngredientMap().values()) {
-                        if (ingredient != null && ingredient.getType() == repairMaterial && (repairMetadata == -1 || ingredient.getData() == repairData)) {
-                            minimumQuantity += ingredient.getAmount();
-                        }
-                    }
-                }
+                minimumQuantity = Repair.getRepairAndSalvageQuantities(new ItemStack(itemMaterial), repairMaterial, repairMetadata);
             }
 
             if (minimumQuantity <= 0) {
@@ -169,7 +148,7 @@ public class RepairConfig extends ConfigLoader {
             }
 
             if (noErrorsInRepairable(reason)) {
-                Repairable repairable = RepairableFactory.getRepairable(itemMaterial, repairMaterial, (byte) repairMetadata, minimumLevel, minimumQuantity, maximumDurability, repairItemType, repairMaterialType, xpMultiplier);
+                Repairable repairable = RepairableFactory.getRepairable(itemMaterial, repairMaterial, repairMetadata, minimumLevel, minimumQuantity, maximumDurability, repairItemType, repairMaterialType, xpMultiplier);
                 repairables.add(repairable);
             }
         }
