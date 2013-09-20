@@ -96,7 +96,7 @@ public class RepairConfig extends ConfigLoader {
             }
 
             // Maximum Durability
-            short maximumDurability = (config.contains("Repairables." + key + ".MaximumDurability") ? (short) config.getInt("Repairables." + key + ".MaximumDurability") : (itemMaterial != null ? itemMaterial.getMaxDurability() : 0));
+            short maximumDurability = (itemMaterial != null ? itemMaterial.getMaxDurability() : (short) config.getInt("Repairables." + key + ".MaximumDurability"));
 
             if (maximumDurability <= 0) {
                 reason.add("Maximum durability of " + key + " must be greater than 0!");
@@ -134,14 +134,7 @@ public class RepairConfig extends ConfigLoader {
             }
 
             // Minimum Quantity
-            int minimumQuantity = 0;
-
-            if (config.contains("Repairables." + key + ".MinimumQuantity")) {
-                minimumQuantity = config.getInt("Repairables." + key + ".MinimumQuantity");
-            }
-            else if (itemMaterial != null) {
-                minimumQuantity = Repair.getRepairAndSalvageQuantities(new ItemStack(itemMaterial), repairMaterial, repairMetadata);
-            }
+            int minimumQuantity = (itemMaterial != null ? Repair.getRepairAndSalvageQuantities(new ItemStack(itemMaterial), repairMaterial, repairMetadata) : config.getInt("Repairables." + key + ".MinimumQuantity"));
 
             if (minimumQuantity <= 0) {
                 reason.add("Minimum quantity of " + key + " must be greater than 0!");
